@@ -231,8 +231,8 @@ const CustomVideoPlayer = ({
       )}
 
       {/* Custom Controls for Desktop */}
-      {showControls && !isMobile && !error && isLoaded && (
-        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent rounded-b-inherit">
+      {showControls && !isMobile && !error && (
+        <div className="absolute bottom-0 left-0 right-0 p-4 bg-black bg-opacity-80 rounded-b-inherit z-10">
           <div className="flex items-center gap-4 text-white">
             <button
               onClick={togglePlay}
@@ -277,7 +277,7 @@ const CustomVideoPlayer = ({
       )}
 
       {/* Play Button Overlay for Desktop */}
-      {!isPlaying && !showOverlay && !isMobile && !error && isLoaded && (
+      {!isPlaying && !showOverlay && !isMobile && !error && (
         <div className="absolute inset-0 flex items-center justify-center opacity-80 hover:opacity-100 transition-opacity">
           <button
             onClick={togglePlay}

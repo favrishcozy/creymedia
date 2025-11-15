@@ -1,11 +1,11 @@
 // src/pages/HomePage.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import VideoPlayer from '../components/VideoPlayer';
 import { FaPlay, FaCalendarAlt } from 'react-icons/fa';
-import { supabase } from '../lib/supabaseClient';
+// import { supabase } from '../lib/supabaseClient';
 
 const HomeContainer = styled.div`
   min-height: 100vh;
@@ -629,28 +629,7 @@ const VideoGrid = styled.div`
 `;
 
 const Home = () => {
-  const [liveVideoId, setLiveVideoId] = useState(null);
   const [showAboutModal, setShowAboutModal] = useState(false);
-
-  useEffect(() => {
-    const fetchLiveVideoConfig = async () => {
-      try {
-        const { data, error } = await supabase
-          .from('site_config')
-          .select('value')
-          .eq('key', 'liveVideoId')
-          .single();
-
-        if (data && data.value) {
-          setLiveVideoId(data.value);
-        }
-      } catch (error) {
-        console.error('Error fetching live video config:', error);
-      }
-    };
-
-    fetchLiveVideoConfig();
-  }, []);
 
   return (
     <HomeContainer>
@@ -706,17 +685,13 @@ const Home = () => {
       )}
 
       <VideoSection>
-        {liveVideoId ? (
-          <VideoPlayer videoId={liveVideoId} />
-        ) : (
-          <div className="video-container">
-            {/* Fallback image when no live video is configured */}
-            <img src="/images/Homehero_ladiesshow.jpeg" alt="Live Session" />
-            <div className="play-button">
-              <FaPlay />
-            </div>
+        <div className="video-container">
+          {/* Fallback image when no live video is configured */}
+          <img src="/images/Homehero_ladiesshow.jpeg" alt="Live Session" />
+          <div className="play-button">
+            <FaPlay />
           </div>
-        )}
+        </div>
       </VideoSection>
       
       <TopRow>

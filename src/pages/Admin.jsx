@@ -1,66 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import AdminControls from '../components/AdminControls';
-import { supabase } from '../lib/supabaseClient';
+import toast from 'react-hot-toast';
+// import { supabase } from '../lib/supabaseClient';
 
 const Admin = () => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [loading, setLoading] = useState(false); // No backend loading needed
+  const [isAdmin, setIsAdmin] = useState(false); // Never admin without backend
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      setUser(user);
-
-      if (user) {
-        // Check if user is admin
-        const { data: adminData } = await supabase
-          .from('admins')
-          .select('*')
-          .eq('user_id', user.id)
-          .single();
-
-        setIsAdmin(!!adminData);
-      }
-
-      setLoading(false);
-    };
-
-    checkAuth();
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        setUser(session?.user ?? null);
-        if (session?.user) {
-          const { data: adminData } = await supabase
-            .from('admins')
-            .select('*')
-            .eq('user_id', session.user.id)
-            .single();
-          setIsAdmin(!!adminData);
-        } else {
-          setIsAdmin(false);
-        }
-        setLoading(false);
-      }
-    );
-
-    return () => subscription.unsubscribe();
-  }, []);
+  // No useEffect for auth since no backend
 
   const handleLogin = async (email, password) => {
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    if (error) throw error;
+    // Backend not integrated
+    toast.error('Backend not integrated yet - cannot login');
+    throw new Error('Backend not integrated');
   };
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
+    setUser(null);
+    setIsAdmin(false);
   };
 
   if (loading) {

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabaseClient';
+// import { supabase } from '../lib/supabaseClient';
+// Mock toast
 import toast from 'react-hot-toast';
 
 const AdminControls = ({ onLogin, isLoggedIn = false }) => {
@@ -20,26 +20,8 @@ const AdminControls = ({ onLogin, isLoggedIn = false }) => {
   }, [isLoggedIn]);
 
   const loadSiteConfig = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('site_config')
-        .select('*');
-
-      if (error) throw error;
-
-      const config = {};
-      data.forEach(item => {
-        config[item.key] = item.value;
-      });
-
-      setLiveVideoId(config.liveVideoId || '');
-      setFeaturedPlaylistId(config.featuredPlaylistId || '');
-      setHomeHeroText(config.homeHeroText || '');
-      setSocialLinks(config.socialLinks || {});
-    } catch (error) {
-      console.error('Error loading site config:', error);
-      toast.error('Failed to load site configuration');
-    }
+    // Backend not integrated yet - using mock data
+    toast('Backend not integrated yet - showing default config');
   };
 
   const handleLogin = async (e) => {
@@ -56,28 +38,9 @@ const AdminControls = ({ onLogin, isLoggedIn = false }) => {
     }
   };
 
-  const updateSiteConfig = async (key, value) => {
-    try {
-      const { error } = await supabase
-        .from('site_config')
-        .upsert({ key, value });
-
-      if (error) throw error;
-
-      toast.success('Configuration updated');
-    } catch (error) {
-      console.error('Error updating config:', error);
-      toast.error('Failed to update configuration');
-    }
-  };
-
   const handleSaveConfig = async () => {
-    await Promise.all([
-      updateSiteConfig('liveVideoId', liveVideoId),
-      updateSiteConfig('featuredPlaylistId', featuredPlaylistId),
-      updateSiteConfig('homeHeroText', homeHeroText),
-      updateSiteConfig('socialLinks', socialLinks),
-    ]);
+    // Backend not integrated yet
+    toast.error('Backend not integrated yet - cannot save configuration');
   };
 
   if (!isLoggedIn) {
