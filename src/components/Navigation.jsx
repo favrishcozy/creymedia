@@ -1,270 +1,57 @@
-// src/components/Navigation.jsx
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-import { FaBars, FaTimes } from 'react-icons/fa';
+import { motion } from "framer-motion";
 
-const Nav = styled.nav`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem 5%;
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  backdrop-filter: blur(10px);
-
-  @media (max-width: 768px) {
-    padding: 0.5rem 2%;
-  }
-`;
-
-const Logo = styled.div`
-  font-size: 1.5rem;
-  font-weight: bold;
-
-  span {
-    color: #ff7b00;
-  }
-`;
-
-const NavLinks = styled.div`
-  display: flex;
-  gap: 2rem;
-  position: relative;
-
-  @media (max-width: 768px) {
-    display: none;
-  }
-`;
-
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  color: white;
-  font-weight: 500;
-  transition: color 0.3s;
-
-  &:hover {
-    color: #00bfff;
-  }
-
-  &:visited {
-    color: white;
-  }
-`;
-
-const NavLink = styled.div`
-  position: relative;
-
-  ${props => props.hasDropdown && `
-    &:hover .dropdown {
-      display: block;
-    }
-  `}
-`;
-
-const Dropdown = styled.div`
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background-color: white;
-  border-radius: 4px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  min-width: 150px;
-  z-index: 1000;
-
-  a {
-    display: block;
-    padding: 0.5rem 1rem;
-    text-decoration: none;
-    color: #000;
-    font-weight: 500;
-    transition: background-color 0.3s;
-
-    &:hover {
-      background-color: #f0f0f0;
-    }
-  }
-`;
-
-const NavButtons = styled.div`
-  display: flex;
-  gap: 1rem;
-
-  @media (max-width: 768px) {
-    display: none;
-  }
-`;
-
-const Button = styled.button`
-  padding: 0.25rem 1rem;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: all 0.3s;
-
-  ${props => props.primary && `
-    background-color: #00bfff;
-    color: white;
-
-    &:hover {
-      background-color: #0099cc;
-    }
-  `}
-
-  ${props => props.secondary && `
-    background-color: transparent;
-    color: #00bfff;
-    border: 1px solid #00bfff;
-
-    &:hover {
-      background-color: #00bfff;
-      color: white;
-    }
-  `}
-`;
-
-const MobileMenuToggle = styled.button`
-  display: none;
-  background: none;
-  border: none;
-  color: white;
-  font-size: 1.5rem;
-  cursor: pointer;
-
-  @media (max-width: 768px) {
-    display: block;
-  }
-`;
-
-const MobileMenu = styled.div`
-  display: none;
-
-  @media (max-width: 768px) {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background-color: rgba(0, 0, 0, 0.9);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1rem 0;
-    backdrop-filter: blur(10px);
-
-    ${props => props.isOpen ? `
-      display: flex;
-    ` : `
-      display: none;
-    `}
-  }
-`;
-
-const MobileNavLinks = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  align-items: center;
-`;
-
-const MobileStyledLink = styled(Link)`
-  text-decoration: none;
-  color: white;
-  font-weight: 500;
-  padding: 0.5rem 1rem;
-  text-align: center;
-
-  &:hover {
-    color: #00bfff;
-  }
-`;
-
-const MobileButtons = styled.div`
-  display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
-`;
-
-const MobileButton = styled.button`
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  font-weight: 500;
-  cursor: pointer;
-  text-decoration: none;
-
-  ${props => props.primary && `
-    background-color: #00bfff;
-    color: white;
-    border: none;
-
-    &:hover {
-      background-color: #0099cc;
-    }
-  `}
-
-  ${props => props.secondary && `
-    background-color: transparent;
-    color: #00bfff;
-    border: 1px solid #00bfff;
-
-    &:hover {
-      background-color: #00bfff;
-      color: white;
-    }
-  `}
-`;
-
-const Navigation = ({ blackBg }) => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
+const Navigation = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <Nav blackBg={blackBg}>
-      <Logo>CREY <span>DREAM</span> HOUSE</Logo>
-      <NavLinks>
-        <StyledLink to="/">Home</StyledLink>
-        <NavLink hasDropdown>
-          <StyledLink as="a">News</StyledLink>
-          <Dropdown className="dropdown">
-            <Link to="/blog">Blog</Link>
-            <Link to="/news">Articles</Link>
-          </Dropdown>
-        </NavLink>
-        <NavLink hasDropdown>
-          <StyledLink as="a">Live</StyledLink>
-          <Dropdown className="dropdown">
-            <Link to="/live">Videos</Link>
-          </Dropdown>
-        </NavLink>
-        <StyledLink to="/about">About</StyledLink>
-        <StyledLink to="/contact">Contact</StyledLink>
-      </NavLinks>
-      <NavButtons>
-        <Button as={Link} to="/livestream-guide" primary>Guide</Button>
-        <Button as={Link} to="/admin" secondary>Admin</Button>
-      </NavButtons>
-      <MobileMenuToggle onClick={toggleMobileMenu}>
-        {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
-      </MobileMenuToggle>
-      <MobileMenu isOpen={isMobileMenuOpen}>
-        <MobileNavLinks>
-          <MobileStyledLink to="/" onClick={toggleMobileMenu}>Home</MobileStyledLink>
-          <MobileStyledLink to="/news" onClick={toggleMobileMenu}>News</MobileStyledLink>
-          <MobileStyledLink to="/live" onClick={toggleMobileMenu}>Live</MobileStyledLink>
-          <MobileStyledLink to="/about" onClick={toggleMobileMenu}>About</MobileStyledLink>
-          <MobileStyledLink to="/contact" onClick={toggleMobileMenu}>Contact</MobileStyledLink>
-        </MobileNavLinks>
-      </MobileMenu>
-    </Nav>
+    <>
+      <header className="fixed top-0 left-0 right-0 z-50">
+        <div className="mx-auto max-w-container px-6 py-4 flex items-center justify-between backdrop-blur bg-navy/60 border-b border-white/6">
+          <div className="flex items-center gap-3">
+            <img src="/images/Logo_brand.png" alt="Logo" className="w-10 h-10 rounded-xl object-cover" />
+            <div className="text-white font-semibold tracking-tight">CREY DREAM HOUSE</div>
+          </div>
+
+          <nav className="hidden md:flex items-center gap-4 text-sm text-white/90 absolute left-1/2 -translate-x-1/2">
+            <Link to="/" className="px-3 py-2 rounded-md hover:bg-white/6">Home</Link>
+            <Link to="/live" className="px-3 py-2 rounded-md hover:bg-white/6">Live</Link>
+            <Link to="/blog" className="px-3 py-2 rounded-md hover:bg-white/6">Blog</Link>
+            <Link to="/about" className="px-3 py-2 rounded-md hover:bg-white/6">About</Link>
+          </nav>
+          <div className="hidden md:flex items-center gap-4">
+            <input className="px-3 py-1 rounded-md bg-white/6 text-white placeholder-muted" placeholder="Search..." />
+            <button className="px-4 py-2 rounded-md bg-brand text-navy font-semibold drop-shadow-btn">Get started</button>
+          </div>
+
+          <div className="md:hidden flex items-center gap-3">
+            <button className="p-2 bg-navy rounded-md text-white" onClick={() => alert('Search')}>🔍</button>
+            <button className="p-2 bg-navy rounded-md text-white" onClick={() => setMenuOpen(true)}>☰</button>
+          </div>
+        </div>
+      </header>
+
+      {/* MOBILE MENU (full screen drawer) */}
+      {menuOpen && (
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="fixed inset-0 bg-slate-900/80 z-50">
+          <div className="p-6 pt-12 max-w-md mx-auto bg-gradient-to-b from-slate-800/80 to-slate-900/90 rounded-2xl mt-6 shadow-2xl">
+            <button onClick={() => setMenuOpen(false)} className="mb-4 text-white">Close</button>
+            <div className="flex flex-col gap-4">
+              <Link onClick={() => setMenuOpen(false)} to="/live" className="py-3 rounded-lg bg-emerald-400 text-slate-900 font-semibold">Live Session 🔴</Link>
+              <Link onClick={() => setMenuOpen(false)} to="/" className="py-3 rounded-lg bg-white/6 text-white">Home</Link>
+              <Link onClick={() => setMenuOpen(false)} to="/blog" className="py-3 rounded-lg bg-white/6 text-white">Explore Articles</Link>
+              <Link onClick={() => setMenuOpen(false)} to="/videos" className="py-3 rounded-lg bg-white/6 text-white">Bookshelf</Link>
+              <Link onClick={() => setMenuOpen(false)} to="/about" className="py-3 rounded-lg bg-white/6 text-white">About</Link>
+              <Link onClick={() => setMenuOpen(false)} to="/contact" className="py-3 rounded-lg bg-white/6 text-white">Contact</Link>
+            </div>
+            <div className="mt-6 flex gap-3 justify-center text-xs opacity-80">
+              <span>Instagram</span> · <span>TikTok</span> · <span>X</span>
+            </div>
+          </div>
+        </motion.div>
+      )}
+    </>
   );
 };
 
