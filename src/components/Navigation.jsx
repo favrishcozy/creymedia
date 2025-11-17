@@ -17,7 +17,7 @@ const Navigation = () => {
           <nav className="hidden md:flex items-center gap-4 text-sm text-white/90 absolute left-1/2 -translate-x-1/2">
             <Link to="/" className="px-3 py-2 rounded-md hover:bg-white/6">Home</Link>
             <Link to="/live" className="px-3 py-2 rounded-md hover:bg-white/6">Live</Link>
-            <Link to="/blog" className="px-3 py-2 rounded-md hover:bg-white/6">Blog</Link>
+            <Link to="/news" className="px-3 py-2 rounded-md hover:bg-white/6">News</Link>
             <Link to="/about" className="px-3 py-2 rounded-md hover:bg-white/6">About</Link>
           </nav>
           <div className="hidden md:flex items-center gap-4">
@@ -40,8 +40,8 @@ const Navigation = () => {
             <div className="flex flex-col gap-4">
               <Link onClick={() => setMenuOpen(false)} to="/live" className="py-3 rounded-lg bg-emerald-400 text-slate-900 font-semibold">Live Session 🔴</Link>
               <Link onClick={() => setMenuOpen(false)} to="/" className="py-3 rounded-lg bg-white/6 text-white">Home</Link>
-              <Link onClick={() => setMenuOpen(false)} to="/blog" className="py-3 rounded-lg bg-white/6 text-white">Explore Articles</Link>
-              <Link onClick={() => setMenuOpen(false)} to="/videos" className="py-3 rounded-lg bg-white/6 text-white">Bookshelf</Link>
+              <Link onClick={() => setMenuOpen(false)} to="/news" className="py-3 rounded-lg bg-white/6 text-white">Explore Articles</Link>
+              <Link onClick={() => setMenuOpen(false)} to="/videos" className="py-3 rounded-lg bg-white/6 text-white">Library</Link>
               <Link onClick={() => setMenuOpen(false)} to="/about" className="py-3 rounded-lg bg-white/6 text-white">About</Link>
               <Link onClick={() => setMenuOpen(false)} to="/contact" className="py-3 rounded-lg bg-white/6 text-white">Contact</Link>
             </div>
